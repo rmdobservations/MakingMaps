@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NW vlinder route</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"/></script>   
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script type="text/javascript" src="js/defineStyles.js">     </script>
+       <script type="text/javascript" src="js/defineIconStyles.js">     </script>
+     <script type="text/javascript"    src="js/gpx.js">
+    </script>
+<style type="text/css">
+#map {
+	height: 400px;
+	width: 600px;
+}
+</style>    
+    
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+      <div id="mouse-position"></div>
+      <h1>Information</h1>
+    <div id="info">&nbsp;</div>
+     <div id="infotime">&nbsp;</div>
+  
+    <form>
+      <label>Projection </label>
+      <select id="projection">
+        <option value="EPSG:4326">EPSG:4326</option>
+        <option value="EPSG:3857">EPSG:3857</option>
+      </select>
+      <label>Precision </label>
+      <input id="precision" type="number" min="0" max="12" value="4"/>
+    </form>
+    <script>
+ 
+    </script>
+  </body>
+</html>

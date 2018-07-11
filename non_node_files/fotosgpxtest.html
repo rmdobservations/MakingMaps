@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+    <title>GPX fotos Vlinder NW</title>
+      <meta charset="utf-8" />
+    
+   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+  
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+   
+       <script 
+ type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol-debug.js"></script>
+ 
+ 
+<style type="text/css">
+#map {
+height: 400px;
+width: 600px;
+}
+
+.class-container {height: 200px; width: 200px; position: relative; float: left;  border: 5px solid #abcdef; }; 
+
+</style>    
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+     <div id="info">&nbsp;</div>
+       <div id="foto">&nbsp;</div>
+    <script>
+  
+var gpxformat= new ol.format.GPX();
+
+var collection = new ol.Collection();
+
+    var vectorSource = new ol.source.Vector({
+      url: 'data/gpx/vlinder.gpx',
+      projection: 'EPSG:3857',
+      format: gpxformat,
+       features: collection
+    });
+
+
+var customStyleFunction = function(feature, resolution) {
+
+	var label = feature.get('name').substring(3,5)
+	console.log("label: ",label)
+
+	var objStyle = {
+		text: new ol.style.Text({
+				text: label,
+				fill: new ol.style.Fill({
+					color: '#abcdef'
+				}),
+				stroke: new ol.style.Stroke({
+					color: '#123456',
+					width: 1
+				})
+			})
+		}	;
+		var objStyleBack = {
+				image: new ol.style.Circle({
+					fill: new ol.style.Fill({
+						color: '#123456'
+					}),
+				stroke: new ol.style.Stroke({
+				width: 1,
+				color: '#123456'
+					}				),
+				radius: 15
+				}			),
+
+		}
+		// returning two styles causes an overlap.
+var style = [new ol.style.Style(objStyle),new ol.style.Style(objStyleBack)];
+return style;
+};
+
+
+    var vectorLayer = new ol.layer.Vector({
+      source: vectorSource,
+      style: customStyleFunction //styleA
+    });
+
+
+
+    var layer = new ol.layer.Tile({
+      source: new ol.source.OSM()
+    });
+
+    var center = ol.proj.transform([5.1681,52.0455], 'EPSG:4326', 'EPSG:3857');
+
+    var view = new ol.View({
+      center: center,
+      zoom: 16
+    });
+
+    var map = new ol.Map({
+      target: 'map',
+      layers: [layer, vectorLayer],
+      view: view
+    });
+
+    var select = new ol.interaction.Select({
+      layers: [vectorLayer]
+    });
+ map.addInteraction(select);
+ map.on('click', function(event) {
+  var pixel = map.getEventPixel(event.originalEvent);
+        displayFeatureInfo(pixel);
+      });
+ var imgCont = '<h1> This gets written over </h1>'
+ var displayFeatureInfo = function(pixel) {
+ map.forEachFeatureAtPixel(pixel, function(objFeature) {
+       console.log("what does this look like: ",objFeature.getKeys())
+       
+     
+		console.log("what does this look like: ",objFeature.get("name"))
+		var image = objFeature.get("name");
+		imgCont='<img src="images/thumb/'+image +
+		 '" width="128" height="124" alt="Image">';
+		$(imgCont).appendTo('#foto');
+        })
+        }
+      
+    </script>
+  </body>
+</html>

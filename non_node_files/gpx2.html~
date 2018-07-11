@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GPX Data</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+<style type="text/css">
+#map {
+	height: 400px;
+	width: 600px;
+}
+</style>    
+    
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <div id="info">&nbsp;</div>
+    
+    <div id="mouse-position"></div>
+    <form>
+      <label>Projection </label>
+      <select id="projection">
+        <option value="EPSG:4326">EPSG:4326</option>
+        <option value="EPSG:3857">EPSG:3857</option>
+      </select>
+      <label>Precision </label>
+      <input id="precision" type="number" min="0" max="12" value="4"/>
+    </form>
+    <script>
+ var mousePositionControl = new ol.control.MousePosition({
+        coordinateFormat: ol.coordinate.createStringXY(4),
+        projection: 'EPSG:4326',
+        // comment the following two lines to have the mouse position
+        // be placed within the map.
+        className: 'custom-mouse-position',
+        target: document.getElementById('mouse-position'),
+        undefinedHTML: '&nbsp;'
+      });    
+    
+    
+      var raster = new ol.layer.Tile({
+        source: new ol.source.OSM()
+      });
+
+var labelStyle = new ol.style.Style({
+		text: new ol.style.Text({
+          font: '12px Calibri,sans-serif',
+          overflow: true,
+          fill: new ol.style.Fill({
+            color: '#000'
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#fff',
+            width: 3
+          })
+        })
+
+})
+      var style = {
+      
+        'Point': new ol.style.Style({
+          image: new ol.style.Circle({
+            fill: new ol.style.Fill({
+              color: 'rgba(255,0,0,0.4)'
+            }),
+            radius: 5,
+            stroke: new ol.style.Stroke({
+              color: 'red',
+              width: 1
+            })
+          })
+        }),
+        'LineString': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: 'green',
+            width: 3
+          })
+        }),
+        'MultiLineString': new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: '#0f0',
+            width: 3
+          })
+        })
+      };
+   var dotstyle=   function(feature) {
+          return style[feature.getGeometry().getType()];
+        }
+// 'https://openlayers.org/en/v4.6.5/examples/data/gpx/fells_loop.gpx'
+      var vector = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          url: './data/gpx/NieuwWulven_1.gpx',
+          format: new ol.format.GPX()
+        }),
+        style: dotstyle
+      });
+//var center = [-7916041.528716288, 5228379.045749711];
+var center = ol.proj.transform([5.1682, 52.0454], 'EPSG:4326', 'EPSG:3857');
+//52.033333,5.166667
+      var map = new ol.Map({
+      controls: ol.control.defaults({
+          attributionOptions: {
+            collapsible: false
+          }
+        }).extend([mousePositionControl]),
+        layers: [raster, vector],
+        target: document.getElementById('map'),
+        view: new ol.View({
+          center: center,
+          zoom: 16
+        })
+      });
+var projectionSelect = document.getElementById('projection');
+      projectionSelect.addEventListener('change', function(event) {
+        mousePositionControl.setProjection(event.target.value);
+      });
+
+      var precisionInput = document.getElementById('precision');
+      precisionInput.addEventListener('change', function(event) {
+        var format = ol.coordinate.createStringXY(event.target.valueAsNumber);
+        mousePositionControl.setCoordinateFormat(format);
+      });
+      var displayFeatureInfo = function(pixel) {
+        var features = [];
+        map.forEachFeatureAtPixel(pixel, function(feature) {
+          features.push(feature);
+        });
+        if (features.length > 0) {
+          var info = [];
+          var i, ii;
+          for (i = 0, ii = features.length; i < ii; ++i) {
+            info.push(features[i].get('desc'));
+          }
+          document.getElementById('info').innerHTML = info.join(', ') || '(unknown)';
+          map.getTarget().style.cursor = 'pointer';
+        } else {
+          document.getElementById('info').innerHTML = '&nbsp;';
+          map.getTarget().style.cursor = '';
+        }
+      };
+
+      map.on('pointermove', function(evt) {
+        if (evt.dragging) {
+          return;
+        }
+        var pixel = map.getEventPixel(evt.originalEvent);
+        displayFeatureInfo(pixel);
+      });
+
+      map.on('click', function(evt) {
+        displayFeatureInfo(evt.pixel);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<gpx version="1.1" creator="RMD Observations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">"
+<wpt lat="52.0402777777778" lon="5.17194444444444">
+<time>2018:05:12_11:35:12Z</time>
+<name>20180512_133514.jpg</name>
+<desc>80</desc>
+</wpt>
+<wpt lat="52.0411111111111" lon="5.17333333333333">
+<time>2018:05:12_11:39:54Z</time>
+<name>20180512_133958.jpg</name>
+<desc>80</desc>
+</wpt>
+<wpt lat="52.045" lon="5.16888888888889">
+<time>2018:05:12_11:44:48Z</time>
+<name>20180512_134450.jpg</name>
+<desc>dagpouwoog</desc>
+</wpt>
+<wpt lat="52.045" lon="5.16888888888889">
+<time>2018:05:12_11:45:47Z</time>
+<name>20180512_134547.jpg</name>
+<desc>ok</desc>
+</wpt>
+<wpt lat="52.0388888888889" lon="5.16055555555556">
+<time>2018:05:12_11:55:25Z</time>
+<name>20180512_135528.jpg</name>
+<desc>ok</desc>
+</wpt>
+<wpt lat="52.0447222222222" lon="5.16555555555556">
+<time>2018:05:12_11:56:11Z</time>
+<name>20180512_135611.jpg</name>
+<desc>ok</desc>
+</wpt>
+<wpt lat="52.0455555555556" lon="5.16555555555556">
+<time>2018:05:12_12:12:01Z</time>
+<name>20180512_141206.jpg</name>
+<desc>ok</desc>
+</wpt>
+<wpt lat="52.0455555555556" lon="5.16805555555556">
+<time>2018:05:12_12:19:11Z</time>
+<name>20180512_141916.jpg</name>
+<desc>ok</desc>
+</wpt>
+<wpt lat="52.0455555555556" lon="5.16944444444444">
+<time>2018:05:12_12:25:20Z</time>
+<name>20180512_142524.jpg</name>
+<desc>ok</desc>
+</wpt>
+</gpx>

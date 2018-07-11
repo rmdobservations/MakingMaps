@@ -1,0 +1,27 @@
+{
+  "name": "makingmaps",
+  "version": "1.0.0",
+  "description": "Testing and learning how to work with npm and openlayers mapping software",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmdobservations/MakingMaps.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmdobservations/MakingMaps/issues"
+  },
+  "homepage": "https://github.com/rmdobservations/MakingMaps#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.9.4"
+  },
+  "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "parcel index.html",
+  "build": "parcel build --public-url . index.html"
+}
+}
